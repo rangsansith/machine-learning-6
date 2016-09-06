@@ -1,4 +1,4 @@
-package com.github.zjiajun.regression;
+package com.github.zjiajun.regression.logistic;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -65,6 +65,28 @@ public class SimpleLogistic {
     }
 
 
+
+    public static List<Instance> readData(String file) throws IOException {
+        List<Instance> dataset = new ArrayList<Instance>();
+        String str;
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            while ((str = reader.readLine()) != null) {
+                String[] split = str.split(",");
+                double[] data = new double[split.length - 1];
+                data[0] = Double.parseDouble(split[0]);
+                data[1] = Double.parseDouble(split[1]);
+                double label = Double.parseDouble(split[2]);
+                Instance instance = new Instance(label, data);
+                dataset.add(instance);
+            }
+        } finally {
+            if (reader != null) reader.close();
+        }
+        return dataset;
+    }
+
     public static List<Instance> readDataSet(String file) throws FileNotFoundException {
         List<Instance> dataset = new ArrayList<Instance>();
         Scanner scanner = null;
@@ -96,8 +118,11 @@ public class SimpleLogistic {
 
 
     public static void main(String... args) throws IOException {
-        List<Instance> instances = readDataSet("/Users/zhujiajun/Work/octaveProjects/dataset.txt");
-        SimpleLogistic logistic = new SimpleLogistic(5);
+        String file = Thread.currentThread().getContextClassLoader().getResource("ex2data1.txt").getFile();
+        System.out.println(file);
+//        List<Instance> instances = readDataSet(file);
+        List<Instance> instances = readData(file);
+        SimpleLogistic logistic = new SimpleLogistic(2);
         logistic.train(instances);
         double[] x = {2, 1, 1, 0, 1};
         System.out.println("prob(1|x) = " + logistic.classify(x));
