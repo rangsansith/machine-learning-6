@@ -29,7 +29,6 @@ hs_err_pid*
 
 # Gradle:
 .idea/gradle.xml
-.idea/libraries
 
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
@@ -80,3 +79,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+regression/src/main/java/com/github/zjiajun/regression/linear/
+regression/src/test/resources/
